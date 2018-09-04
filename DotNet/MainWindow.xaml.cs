@@ -23,6 +23,12 @@ namespace DotNet
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModels();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
