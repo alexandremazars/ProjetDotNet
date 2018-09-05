@@ -53,9 +53,9 @@ namespace DotNet
             /*while(strike == null || maturity == null )
             {
                 TickerStarted = false;
-            }
+            }*/
             return TickerStarted;
-        }*/
+        }
         private void StartTicker()
         {
             TickerStarted = true;
