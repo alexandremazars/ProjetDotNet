@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="707,204,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Command="{Binding StartCommand}" Content="Start" HorizontalAlignment="Left" Margin="707,204,0,0" VerticalAlignment="Top" Width="75"/>
         <ComboBox HorizontalAlignment="Left" Margin="33,42,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableOptions}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -15,17 +15,14 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120"/>
-        <TextBox Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="Enter Strike" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" >
-            
-        </TextBox>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="494,42,0,0" TextWrapping="Wrap" Text="Enter Option Price" VerticalAlignment="Top" Width="110"/>
+        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120" />
+        <TextBox Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="Strike" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" />
         <DatePicker HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"/>
         <ComboBox HorizontalAlignment="Left" Margin="199,91,0,0" VerticalAlignment="Top" Width="120"/>
         <DatePicker HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" Width="106"/>
-        <TextBlock HorizontalAlignment="Left" Margin="199,292,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63">
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="340,292,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
+        <TextBlock HorizontalAlignment="Left" Margin="340,227,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63"/>
+        <TextBlock HorizontalAlignment="Left" Margin="340,262,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
+        <TextBlock HorizontalAlignment="Left" Margin="340,296,0,0" TextWrapping="Wrap" Text="Price option :" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.491,1.988"/>
 
     </Grid>
 </Window>
