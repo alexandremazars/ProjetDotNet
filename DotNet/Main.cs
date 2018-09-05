@@ -29,6 +29,7 @@ namespace DotNet
             RebalancementModel couverture = new RebalancementModel(vanillaCall, jour0.Date, (double) jour0.PriceList["1"]);
             couverture.nbActifSsJacents = couverture.Delta();
             couverture.valeurPortefeuille = couverture.prixOption();
+            double optionInitial = couverture.valeurPortefeuille;
             couverture.liquidite = couverture.Liquidite();
 
             for (var i=1; i<priceList.Count; i++)
@@ -37,7 +38,9 @@ namespace DotNet
                 decimal spotPrice = element.PriceList["1"];
                 RebalancementModel NewCouverture = new RebalancementModel(vanillaCall, element.Date, (double)spotPrice, couverture);
                 couverture = NewCouverture;
-                Console.WriteLine(couverture.ValeurPortefeuille());
+                Console.WriteLine("Payoff de l'option: " + (spotPrice - strike));
+                Console.WriteLine("Valeur portefeuille: " + NewCouverture.ValeurPortefeuille());
+                Console.WriteLine("Pourcentage: " + (NewCouverture.ValeurPortefeuille() - NewCouverture.prixOption())/optionInitial);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using PricingLibrary.Computations;
 using PricingLibrary.FinancialProducts;
+using PricingLibrary.Utilities;
 using PricingLibrary.Utilities.MarketDataFeed;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,9 @@ namespace DotNet.Models
             this.date = date;
             this.spotPrice = spotPrice;
             this.ancienJour = ancienJour;
+            nbActifSsJacents = Delta();
+            valeurPortefeuille = ValeurPortefeuille();
+            liquidite = Liquidite();
         }
 
         public PricingResults pricingResult()
@@ -43,19 +47,6 @@ namespace DotNet.Models
             Pricer pricer = new Pricer();
             return pricer.PriceCall(vanillaCall, date, 365, spotPrice, 0.4);
         }
-
-        /*public PricingResults PricingResult
-        {
-            set
-            {
-                //SetProperty(ref pricingResults, value);
-            }
-            get
-            {
-                Pricer pricer = new Pricer();
-                return pricer.PriceCall(vanillaCall, date, 365, spotPrice, 0.4);
-            }
-        }*/
 
         public double prixOption()
         {
@@ -76,7 +67,8 @@ namespace DotNet.Models
 
         public double ValeurPortefeuille()
         {
-            return ancienJour.Delta() * spotPrice + ancienJour.Liquidite() * Math.Exp(RiskFreeRateProvider.GetRiskFreeRateAccruedValue(1));
+            return ancienJour.Delta() * spotPrice + ancienJour.Liquidite() * 
+                RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(1, 365));
         }
 
         public void CompareOptionCouverture()

@@ -29,5 +29,7 @@ namespace DotNet
             Console.Write(myOptionsList[0].Name);
         }
         #endregion
+
+        Main test = new Main();
     }
 }
