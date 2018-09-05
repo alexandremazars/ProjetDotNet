@@ -18,6 +18,7 @@ namespace DotNet
         public DateTime maturity { get; set; }
         public decimal price { get; set; }
         //public ObservableCollection<>
+
         #endregion
 
         #region Private fields
