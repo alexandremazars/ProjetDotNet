@@ -1,3 +1,5 @@
 
-DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide
+DotNet/.vs
 *.cache
+DotNet/bin
+DotNet/obj
