@@ -54,3 +54,5 @@ C:\Users\PCP-Alexandre\Documents\GitHub\ProjetDotNet\DotNet\obj\x64\Debug\DotNet
 C:\Users\PCP-Alexandre\Documents\GitHub\ProjetDotNet\DotNet\obj\x64\Debug\DotNet.csproj.CopyComplete
 C:\Users\PCP-Alexandre\Documents\GitHub\ProjetDotNet\DotNet\obj\x64\Debug\DotNet.exe
 C:\Users\PCP-Alexandre\Documents\GitHub\ProjetDotNet\DotNet\obj\x64\Debug\DotNet.pdb
+C:\Users\ensimag\Documents\GitHub\ProjetDotNet\DotNet\bin\x64\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+C:\Users\ensimag\Documents\GitHub\ProjetDotNet\DotNet\bin\x64\Debug\System.Windows.Controls.DataVisualization.Toolkit.xml
