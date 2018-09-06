@@ -16,13 +16,17 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120" />
-        <TextBox x:Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="Strike" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" />
-        <DatePicker HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"/>
+        <DatePicker Name="DateDebutTest" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120" SelectedDate="{Binding debutTest}" />
+        <TextBox x:Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="{Binding strike}" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" />
+        <DatePicker Name="DateMaturity" HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"  SelectedDate="{Binding maturity}"/>
         <ComboBox HorizontalAlignment="Left" Margin="199,91,0,0" VerticalAlignment="Top" Width="120"/>
-        <DatePicker HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" Width="106"/>
-        <TextBlock HorizontalAlignment="Left" Margin="340,227,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63"/>
-        <TextBlock HorizontalAlignment="Left" Margin="340,262,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
-        <TextBlock HorizontalAlignment="Left" Margin="340,296,0,0" TextWrapping="Wrap" Text="Price option :" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.491,1.988"/>
+        <DatePicker Name="DateEstimation" HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" Width="106" />
+        <TextBlock Name ="PayoffBlock" HorizontalAlignment="Left" Margin="340,227,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63"/>
+        <TextBlock Name ="HedgeBlock" HorizontalAlignment="Left" Margin="340,262,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
+        <TextBlock Name="PriceBlock" HorizontalAlignment="Left" Margin="340,296,0,0" TextWrapping="Wrap" Text="Price option :" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.491,1.988"/>
+        <TextBlock Name="PayoffValue" HorizontalAlignment="Left" Margin="403,227,0,0" TextWrapping="Wrap" Text="{Binding payOffValue}" VerticalAlignment="Top"/>
+        <TextBlock Name="HedgeValue" HorizontalAlignment="Left" Margin="403,262,0,0" TextWrapping="Wrap" Text="{Binding hedgeValue}" VerticalAlignment="Top"/>
+        <TextBlock Name="PriceValue" HorizontalAlignment="Left" Margin="433,299,0,0" TextWrapping="Wrap" Text="{Binding price}" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>

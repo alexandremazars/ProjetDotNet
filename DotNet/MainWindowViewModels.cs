@@ -16,10 +16,13 @@ namespace DotNet
     {
         #region public fields
         public ObservableCollection<IOption> AvailableOptions { get; private set; }
-        public string strike { get; set; }
+        public String strike { get; set; }
         public DateTime maturity { get; set; }
-        public decimal price { get; set; }
+        public double price { get; set; }
+        public DateTime debutTest { get; set; }
         //public ObservableCollection<>
+        public decimal payOffValue { get; set; } 
+        public double hedgeValue { get; set; }
 
         #endregion
 
@@ -31,16 +34,21 @@ namespace DotNet
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
-            IOption call = new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 1, 6), 10);
+            SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
+            new SimulatedDataFeedProvider(), DateTime.Now, 1);
+            IOption call = simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
             AvailableOptions = new ObservableCollection<IOption>(myOptionsList);
-            Console.Write(myOptionsList[0].Name);
+            strike = Convert.ToString(simulation.Strike);
+            maturity = simulation.Option.Maturity;
+            debutTest = simulation.DateDebut;
+            price = simulation.GetRebalancement()[0].prixOption();
+            payOffValue = simulation.GetPayoff().Last();
+            hedgeValue = simulation.GetCouverture().Last();
         }
         #endregion
-
-
-        SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), DateTime.Now, 1);
+        
+        
 
         public DelegateCommand StartCommand { get; private set; }
 
