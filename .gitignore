@@ -3,3 +3,5 @@ DotNet/.vs
 *.cache
 DotNet/bin
 DotNet/obj
+DotNet/packages
+DotNet.7z
