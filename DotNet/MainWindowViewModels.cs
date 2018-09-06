@@ -39,8 +39,13 @@ namespace DotNet
         #endregion
 
 
+<<<<<<< HEAD
         SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("SOCIETE GENERALE SA", "GLE FP    "), new DateTime(2019, 6, 6), 100),
             new HistoricalDataFeedProvider(), new DateTime(2015, 1, 1), 1);
+=======
+        SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
+            new SimulatedDataFeedProvider(), DateTime.Now, 1);
+>>>>>>> a84e30e564cc06c67f6759578a21b26ac5ccd6fd
 
         public DelegateCommand StartCommand { get; private set; }
 

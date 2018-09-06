@@ -1,17 +1,7 @@
 
-DotNet/.vs/DotNet/v15/.suo
-DotNet/.vs/DotNet/v15/.suo
+DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide
+*.cache
+/DotNet/bin
+/DotNet/obj
+/DotNet/.vs
 *.ide
-DotNet/.vs/DotNet/v15/.suo
-DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide-wal
-DotNet/bin/x64/Debug/marketOutput.csv
-DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide-wal
-DotNet/obj/x64/Debug/DotNet.csproj.CoreCompileInputs.cache
-DotNet/obj/x64/Debug/DotNet.csprojAssemblyReference.cache
-DotNet/obj/x64/Debug/DotNet_MarkupCompile.cache
-DotNet/obj/x64/Debug/MainWindow.g.cs
-DotNet/obj/x64/Debug/MainWindow.g.i.cs
-DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide
-DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide-wal
-DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide
-DotNet/.vs/DotNet/v15/Server/sqlite3/storage.ide-wal
