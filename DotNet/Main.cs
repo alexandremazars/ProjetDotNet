@@ -12,7 +12,7 @@ namespace DotNet
 {
     class Main
     {
-        SimulatedDataFeedProvider simulatedData;
+        /*SimulatedDataFeedProvider simulatedData;
         VanillaCall vanillaCall;
         
         public Main()
@@ -42,6 +42,6 @@ namespace DotNet
                 Console.WriteLine("Valeur portefeuille: " + NewCouverture.ValeurPortefeuille());
                 Console.WriteLine("Pourcentage: " + (NewCouverture.ValeurPortefeuille() - NewCouverture.prixOption())/optionInitial);
             }
-        }
+        }*/
     }
 }

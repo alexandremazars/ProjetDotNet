@@ -111,7 +111,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\PortefeuilleModel.cs" />
     <Compile Include="Models\RebalancementModel.cs" />
+    <Compile Include="Models\SimulationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

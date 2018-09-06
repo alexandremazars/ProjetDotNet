@@ -12,40 +12,48 @@ namespace DotNet.Models
 {
     class RebalancementModel
     {
-        VanillaCall vanillaCall;
+        IOption option;
         DateTime date;
-        double spotPrice;
+        private double spotPrice;
 
         RebalancementModel ancienJour;
 
-        public double valeurPortefeuille;
-        public double nbActifSsJacents;
-        public double liquidite;
+        private double valeurPortefeuille;
+        private double nbActifSsJacents;
+        private double liquidite;
 
-        //PricingResults pricingResults;
+        public int nbJourParAn;
+        public int periodeRebalancement;
 
-        public RebalancementModel(VanillaCall vanillaCall, DateTime date, double spotPrice)
+        public RebalancementModel(IOption option, DateTime date, double spotPrice, int nbJourParAn, int periodeRebalancement)
         {
-            this.vanillaCall = vanillaCall;
+            this.option = option;
             this.date = date;
             this.spotPrice = spotPrice;
+            this.nbJourParAn = nbJourParAn;
+            this.periodeRebalancement = periodeRebalancement;
+            nbActifSsJacents = NbActifSsJacents;
+            valeurPortefeuille = ValeurPortefeuille;
+            liquidite = Liquidite;
         }
 
-        public RebalancementModel(VanillaCall vanillaCall, DateTime date, double spotPrice, RebalancementModel ancienJour)
+        public RebalancementModel(IOption option, DateTime date, double spotPrice, int nbJourParAn, int periodeRebalancement, RebalancementModel ancienJour)
         {
-            this.vanillaCall = vanillaCall;
+            this.option = option;
             this.date = date;
             this.spotPrice = spotPrice;
+            this.nbJourParAn = nbJourParAn;
+            this.periodeRebalancement = periodeRebalancement;
             this.ancienJour = ancienJour;
-            nbActifSsJacents = Delta();
-            valeurPortefeuille = ValeurPortefeuille();
-            liquidite = Liquidite();
+            nbActifSsJacents = NbActifSsJacents;
+            valeurPortefeuille = ValeurPortefeuille;
+            liquidite = Liquidite;
         }
 
         public PricingResults pricingResult()
         {
             Pricer pricer = new Pricer();
-            return pricer.PriceCall(vanillaCall, date, 365, spotPrice, 0.4);
+            return pricer.PriceCall((VanillaCall) option, date, nbJourParAn, spotPrice, 0.4);
         }
 
         public double prixOption()
@@ -53,28 +61,33 @@ namespace DotNet.Models
             return pricingResult().Price;
         }
 
-        public double Delta()
+        public double SpotPrice
         {
-            nbActifSsJacents = pricingResult().Deltas[0];
-            return nbActifSsJacents;
+            get { return spotPrice; }
+            set { spotPrice = value; }
         }
 
-        public double Liquidite()
+        public double NbActifSsJacents
         {
-            liquidite = valeurPortefeuille - nbActifSsJacents * spotPrice;
-            return liquidite;
+            get { return pricingResult().Deltas[0]; }
+            set { nbActifSsJacents = value; }
         }
 
-        public double ValeurPortefeuille()
+        public double Liquidite
         {
-            return ancienJour.Delta() * spotPrice + ancienJour.Liquidite() * 
-                RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(1, 365));
+            get { return valeurPortefeuille - nbActifSsJacents * spotPrice; }
+            set { liquidite = value; }
         }
 
-        public void CompareOptionCouverture()
+        public double ValeurPortefeuille
         {
-            Console.WriteLine("Prix de l'option: " + prixOption());
-            Console.WriteLine("Valeur du portefeuille de couverture: " + Liquidite());
+            get {
+                if (ancienJour != null)
+                    return ancienJour.nbActifSsJacents * spotPrice + ancienJour.liquidite * RiskFreeRateProvider.
+                        GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(periodeRebalancement, nbJourParAn));
+                else return valeurPortefeuille;
+            }
+            set { valeurPortefeuille = value; }
         }
     }
 }

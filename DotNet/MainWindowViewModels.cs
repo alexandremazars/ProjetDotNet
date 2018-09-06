@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Mvvm;
+using DotNet.Models;
+using PricingLibrary.Utilities.MarketDataFeed;
 
 namespace DotNet
 {
@@ -30,6 +32,7 @@ namespace DotNet
         }
         #endregion
 
-        Main test = new Main();
+        SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
+            new SimulatedDataFeedProvider(), DateTime.Now, 1);
     }
 }
