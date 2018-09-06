@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNet.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,14 @@ using System.Windows.Shapes;
 namespace DotNet.Visualization
 {
     /// <summary>
-    /// Logique d'interaction pour UserControl1.xaml
+    /// Logique d'interaction pour GraphVisualization.xaml
     /// </summary>
-    public partial class GraphVisualization : UserControl
+    public partial class GraphVisualization: Window
     {
         public GraphVisualization()
         {
             InitializeComponent();
-            this.DataContext = new Graph();
+            this.DataContext = MainWindowViewModels.graphTest;
         }
     }
 }

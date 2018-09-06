@@ -9,6 +9,8 @@ using Prism.Commands;
 using Prism.Mvvm;
 using DotNet.Models;
 using PricingLibrary.Utilities.MarketDataFeed;
+using System.Windows;
+using DotNet.Visualization;
 
 namespace DotNet
 {
@@ -28,7 +30,7 @@ namespace DotNet
         public decimal payOffValue { get; set; } 
         public double hedgeValue { get; set; }
         public ObservableCollection<Graph> AvailableClasses { get; private set; }
- 
+        public static Graph graphTest { get; set; }
 
 
         public SimulationModel simulation;
@@ -53,12 +55,15 @@ namespace DotNet
             price = simulation.GetRebalancement()[0].prixOption();
             payOffValue = simulation.GetPayoff().Last();
             hedgeValue = simulation.GetCouverture().Last();
-            Graph cl1 = new Graph();
-            List<Graph> myList = new List<Graph>() { cl1};
-            AvailableClasses = new ObservableCollection<Graph>(myList);
-            Graph graph = new Graph();
-            graph.GraphSimulation = simulation; 
 
+            Graph graph = new Graph();
+            graph.setSimulation(simulation);
+            List<Graph> myList = new List<Graph>() {graph};
+            AvailableClasses = new ObservableCollection<Graph>(myList);
+            graphTest = new Graph();
+            graphTest.setSimulation(simulation);
+            Window win = new GraphVisualization();
+            win.Show();
         }
         #endregion
 
