@@ -8,5 +8,6 @@ namespace DotNet.Models
 {
     class Volatilite
     {
+        int a;
     }
 }
