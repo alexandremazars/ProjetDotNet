@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DotNet"
-        xmlns:Compatible="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Compatible;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="DotNet.MainWindow"
+        x:Class="DotNet.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
