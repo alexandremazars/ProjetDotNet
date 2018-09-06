@@ -38,10 +38,10 @@ namespace DotNet
         }
         #endregion
 
-<<<<<<< HEAD
+
         SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
             new SimulatedDataFeedProvider(), DateTime.Now, 1);
-=======
+
         public DelegateCommand StartCommand { get; private set; }
 
         public bool TickerStarted
@@ -67,7 +67,7 @@ namespace DotNet
         {
             TickerStarted = true;
         }
-        Main test = new Main();
->>>>>>> 68fc460330a907e1a8c0de6def69164bda08acf1
+        //Main test = new Main();
+
     }
 }
