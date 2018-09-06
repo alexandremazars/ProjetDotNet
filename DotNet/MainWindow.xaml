@@ -3,11 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DotNet"
-        xmlns:Compatible="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Compatible;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="DotNet.MainWindow"
+        x:Class="DotNet.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/GraphDictionnary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="0,0,-8,-20">
         <Button Command="{Binding StartCommand}" Content="Start" HorizontalAlignment="Left" Margin="707,204,0,0" VerticalAlignment="Top" Width="75"/>
         <ComboBox HorizontalAlignment="Left" Margin="33,42,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableOptions}">
             <ComboBox.ItemTemplate>
@@ -27,6 +33,13 @@
         <TextBlock Name="PayoffValue" HorizontalAlignment="Left" Margin="403,227,0,0" TextWrapping="Wrap" Text="{Binding payOffValue}" VerticalAlignment="Top"/>
         <TextBlock Name="HedgeValue" HorizontalAlignment="Left" Margin="403,262,0,0" TextWrapping="Wrap" Text="{Binding hedgeValue}" VerticalAlignment="Top"/>
         <TextBlock Name="PriceValue" HorizontalAlignment="Left" Margin="433,299,0,0" TextWrapping="Wrap" Text="{Binding price}" VerticalAlignment="Top"/>
-
+        <ListBox HorizontalAlignment="Left" Height="33" Margin="33,226,0,0" VerticalAlignment="Top" Width="159" ItemsSource="{Binding AvailableClasses}" SelectedItem="{Binding SelectedClasses}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ContentControl Grid.Column="1" Content="{Binding SelectedClasses}" />
     </Grid>
 </Window>

@@ -14,16 +14,24 @@ namespace DotNet
 {
     internal class MainWindowViewModels : BindableBase
     {
+        #region Private fields
+        private Graph selectedClasses;
+        #endregion
+
         #region public fields
         public ObservableCollection<IOption> AvailableOptions { get; private set; }
-        public String strike { get; set; }
+        public string strike { get; set; }
         public DateTime maturity { get; set; }
         public double price { get; set; }
         public DateTime debutTest { get; set; }
         //public ObservableCollection<>
         public decimal payOffValue { get; set; } 
         public double hedgeValue { get; set; }
+        public ObservableCollection<Graph> AvailableClasses { get; private set; }
+ 
 
+
+        public SimulationModel simulation;
         #endregion
 
         #region Private fields
@@ -34,7 +42,7 @@ namespace DotNet
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
-            SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
+            simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
             new SimulatedDataFeedProvider(), DateTime.Now, 1);
             IOption call = simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
@@ -45,10 +53,24 @@ namespace DotNet
             price = simulation.GetRebalancement()[0].prixOption();
             payOffValue = simulation.GetPayoff().Last();
             hedgeValue = simulation.GetCouverture().Last();
+            Graph cl1 = new Graph();
+            List<Graph> myList = new List<Graph>() { cl1};
+            AvailableClasses = new ObservableCollection<Graph>(myList);
+            Graph graph = new Graph();
+            graph.GraphSimulation = simulation; 
+
         }
         #endregion
-        
-        
+
+        public SimulationModel Simulation
+        {
+            get { return simulation; }
+        }
+        public Graph SelectedClasses
+        {
+            get { return selectedClasses; }
+            set { SetProperty(ref selectedClasses, value); }
+        }
 
         public DelegateCommand StartCommand { get; private set; }
 

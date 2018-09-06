@@ -49,7 +49,10 @@ namespace DotNet.Models
             valeurPortefeuille = ValeurPortefeuille;
             liquidite = Liquidite;
         }
-
+        public DateTime Date
+        {
+            get { return date; }
+        }
         public PricingResults pricingResult()
         {
             Pricer pricer = new Pricer();
