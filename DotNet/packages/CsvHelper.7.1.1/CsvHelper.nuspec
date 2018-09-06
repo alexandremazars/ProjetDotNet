@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>CsvHelper</id>
+    <version>7.1.1</version>
+    <authors>Josh Close</authors>
+    <owners>Josh Close</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://raw.githubusercontent.com/JoshClose/CsvHelper/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/JoshClose/CsvHelper</projectUrl>
+    <iconUrl>https://raw.github.com/JoshClose/CsvHelper/master/logo/Comma-Small.png</iconUrl>
+    <description>A library for reading and writing CSV files. Extremely fast, flexible, and easy to use. Supports reading and writing of custom class objects.</description>
+    <releaseNotes>http://joshclose.github.io/CsvHelper/#change-log</releaseNotes>
+    <copyright>Copyright © 2009-2017 Josh Close and Contributors</copyright>
+    <tags>csv csvhelper comma separated value delimited</tags>
+    <repository type="git" url="https://github.com/JoshClose/CsvHelper" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.CSharp" version="4.4.0" exclude="Build,Analyzers" />
+        <dependency id="System.Reflection.TypeExtensions" version="4.4.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework=".NETFramework4.5" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
