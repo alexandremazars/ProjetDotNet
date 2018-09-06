@@ -61,9 +61,9 @@ namespace DotNet.Models
             set { plageEstimation = value; }
         }
 
-        public RebalancementModel Jour0(DataFeed feedJour0, int periodeRebalancement)
+        public RebalancementModel Jour0(DataFeed feedJour0)
         {
-            RebalancementModel couverture = new RebalancementModel(option, dateDebut, (double) feedJour0.PriceList["1"], dataFeedProvider.NumberOfDaysPerYear, periodeRebalancement);
+            RebalancementModel couverture = new RebalancementModel(option, dateDebut, (double) feedJour0.PriceList["1"], dataFeedProvider.NumberOfDaysPerYear);
 
             couverture.NbActifSsJacents = couverture.NbActifSsJacents;
             couverture.ValeurPortefeuille = couverture.prixOption();
@@ -75,10 +75,9 @@ namespace DotNet.Models
         public List<decimal> GetPayoff()
         {
             List<decimal> payoffs = new List<decimal>();
-            int periodeRebalancement = 1;
             var priceList = dataFeedProvider.GetDataFeed(option, dateDebut);
 
-            for (var i = 1; i < priceList.Count; i+=periodeRebalancement)
+            for (var i = 1; i < priceList.Count; i++)
             {
                 var element = priceList[i];
                 decimal spotPrice = element.PriceList["1"];
@@ -91,21 +90,23 @@ namespace DotNet.Models
         {
             List<RebalancementModel> couvertures = new List<RebalancementModel>();
             var priceList = dataFeedProvider.GetDataFeed(option, dateDebut);
-            int periodeRebalancement = 1;
-            RebalancementModel couverture = Jour0(priceList[0], periodeRebalancement);
+            RebalancementModel couverture = Jour0(priceList[0]);
+            RebalancementModel ancienRebalancement = couverture;
             double optionInitiale = couverture.prixOption();
 
             couvertures.Add(couverture);
 
-            for (var i = 1; i < priceList.Count; i += periodeRebalancement)
+            for (var i = 1; i < priceList.Count; i++)
             {
                 var element = priceList[i];
                 decimal spotPrice = element.PriceList["1"];
                 RebalancementModel NewCouverture = new RebalancementModel(option, element.Date, (double)spotPrice, 
-                    dataFeedProvider.NumberOfDaysPerYear, periodeRebalancement, couverture);
+                    dataFeedProvider.NumberOfDaysPerYear, ancienRebalancement, couverture);
                 couverture = NewCouverture;
 
                 couvertures.Add(NewCouverture);
+
+                if (element.Date.DayOfWeek.ToString() == "Monday") ancienRebalancement = NewCouverture;
             }
 
             return couvertures;
@@ -126,8 +127,7 @@ namespace DotNet.Models
             double optionInitiale = rebalancements[0].prixOption();
 
             foreach (RebalancementModel rebalancement in rebalancements)
-                //comparaisons.Add(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
-                Console.WriteLine(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
+                comparaisons.Add(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
 
             return comparaisons;
         }

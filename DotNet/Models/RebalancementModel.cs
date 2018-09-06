@@ -17,33 +17,32 @@ namespace DotNet.Models
         private double spotPrice;
 
         RebalancementModel ancienJour;
+        RebalancementModel ancienRebalancement;
 
         private double valeurPortefeuille;
         private double nbActifSsJacents;
         private double liquidite;
 
         public int nbJourParAn;
-        public int periodeRebalancement;
 
-        public RebalancementModel(IOption option, DateTime date, double spotPrice, int nbJourParAn, int periodeRebalancement)
+        public RebalancementModel(IOption option, DateTime date, double spotPrice, int nbJourParAn)
         {
             this.option = option;
             this.date = date;
             this.spotPrice = spotPrice;
             this.nbJourParAn = nbJourParAn;
-            this.periodeRebalancement = periodeRebalancement;
             nbActifSsJacents = NbActifSsJacents;
             valeurPortefeuille = ValeurPortefeuille;
             liquidite = Liquidite;
         }
 
-        public RebalancementModel(IOption option, DateTime date, double spotPrice, int nbJourParAn, int periodeRebalancement, RebalancementModel ancienJour)
+        public RebalancementModel(IOption option, DateTime date, double spotPrice, int nbJourParAn, RebalancementModel ancienRebalancement, RebalancementModel ancienJour)
         {
             this.option = option;
             this.date = date;
             this.spotPrice = spotPrice;
             this.nbJourParAn = nbJourParAn;
-            this.periodeRebalancement = periodeRebalancement;
+            this.ancienRebalancement = ancienRebalancement;
             this.ancienJour = ancienJour;
             nbActifSsJacents = NbActifSsJacents;
             valeurPortefeuille = ValeurPortefeuille;
@@ -69,7 +68,10 @@ namespace DotNet.Models
 
         public double NbActifSsJacents
         {
-            get { return pricingResult().Deltas[0]; }
+            get {
+                if (date.DayOfWeek.ToString() == "Monday" || ancienRebalancement == null) return pricingResult().Deltas[0];
+                else return ancienRebalancement.nbActifSsJacents;
+            }
             set { nbActifSsJacents = value; }
         }
 
@@ -83,8 +85,11 @@ namespace DotNet.Models
         {
             get {
                 if (ancienJour != null)
+                {
                     return ancienJour.nbActifSsJacents * spotPrice + ancienJour.liquidite * RiskFreeRateProvider.
-                        GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(periodeRebalancement, nbJourParAn));
+                        GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(
+                            DayCount.CountBusinessDays(ancienRebalancement.date, date), nbJourParAn));
+                }
                 else return valeurPortefeuille;
             }
             set { valeurPortefeuille = value; }
