@@ -114,6 +114,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BDModel.cs" />
+    <Compile Include="Models\HistoricalDataFeedProvider.cs" />
     <Compile Include="Models\PortefeuilleModel.cs" />
     <Compile Include="Models\RebalancementModel.cs" />
     <Compile Include="Models\SimulationModel.cs" />

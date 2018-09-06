@@ -14,13 +14,24 @@ namespace DotNet
 {
     internal class MainWindowViewModels : BindableBase
     {
+        #region Private fields
+        private Graph selectedClasses;
+        #endregion
+
         #region public fields
         public ObservableCollection<IOption> AvailableOptions { get; private set; }
         public string strike { get; set; }
         public DateTime maturity { get; set; }
-        public decimal price { get; set; }
+        public double price { get; set; }
+        public DateTime debutTest { get; set; }
         //public ObservableCollection<>
+        public decimal payOffValue { get; set; } 
+        public double hedgeValue { get; set; }
+        public ObservableCollection<Graph> AvailableClasses { get; private set; }
+ 
 
+
+        public SimulationModel simulation;
         #endregion
 
         #region Private fields
@@ -31,21 +42,35 @@ namespace DotNet
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
-            IOption call = new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 1, 6), 10);
+            simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
+            new SimulatedDataFeedProvider(), DateTime.Now, 1);
+            IOption call = simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
             AvailableOptions = new ObservableCollection<IOption>(myOptionsList);
-            Console.Write(myOptionsList[0].Name);
+            strike = Convert.ToString(simulation.Strike);
+            maturity = simulation.Option.Maturity;
+            debutTest = simulation.DateDebut;
+            price = simulation.GetRebalancement()[0].prixOption();
+            payOffValue = simulation.GetPayoff().Last();
+            hedgeValue = simulation.GetCouverture().Last();
+            Graph cl1 = new Graph();
+            List<Graph> myList = new List<Graph>() { cl1};
+            AvailableClasses = new ObservableCollection<Graph>(myList);
+            Graph graph = new Graph();
+            graph.GraphSimulation = simulation; 
+
         }
         #endregion
 
-
-<<<<<<< HEAD
-        SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("SOCIETE GENERALE SA", "GLE FP    "), new DateTime(2019, 6, 6), 100),
-            new HistoricalDataFeedProvider(), new DateTime(2015, 1, 1), 1);
-=======
-        SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), DateTime.Now, 1);
->>>>>>> a84e30e564cc06c67f6759578a21b26ac5ccd6fd
+        public SimulationModel Simulation
+        {
+            get { return simulation; }
+        }
+        public Graph SelectedClasses
+        {
+            get { return selectedClasses; }
+            set { SetProperty(ref selectedClasses, value); }
+        }
 
         public DelegateCommand StartCommand { get; private set; }
 

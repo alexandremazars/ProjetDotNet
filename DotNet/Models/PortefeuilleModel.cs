@@ -8,11 +8,6 @@ namespace DotNet.Models
 {
     class PortefeuilleModel
     {
-        Dictionary<string, double> composition;
-
-        decimal cash;
-
-        DateTime InvestedDate;
 
     }
 }
