@@ -15,7 +15,7 @@
     </Window.Resources>
     <Grid Margin="0,0,-8,-20">
         <Button Command="{Binding StartCommand}" Content="StartSimulation" HorizontalAlignment="Left" Margin="616,162,0,0" VerticalAlignment="Top" Width="131" RenderTransformOrigin="-1.067,-1.682"/>
-        <ComboBox HorizontalAlignment="Left" Margin="33,42,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableOptions}">
+        <ComboBox Name="OptionsName" HorizontalAlignment="Left" Margin="33,42,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableOptions}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -24,8 +24,14 @@
         </ComboBox>
         <DatePicker Name="DateDebutTest" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120" SelectedDate="{Binding UniverseVM.Initializer.DebutTest, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox x:Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Initializer.Strike }" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" />
-        <DatePicker Name="DateMaturity" HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"  SelectedDate="{Binding maturity}"/>
-        <ComboBox HorizontalAlignment="Left" Margin="199,91,0,0" VerticalAlignment="Top" Width="120"/>
+        <DatePicker Name="DateMaturity" HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"  SelectedDate="{Binding UniverseVM.Initializer.Maturity}"/>
+        <ComboBox Name="DataType" HorizontalAlignment="Left" Margin="199,91,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" SelectedItem="{Binding UniverseVM.Initializer.TypeData}" ItemsSource="{Binding AvailableData}">
+        <ComboBox.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Name}"/>
+            </DataTemplate>
+        </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBox Name="NbJoursEstimation" HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" Text="{Binding UniverseVM.Initializer.PlageEstimation}" Width="106" TextChanged="NbJoursEstimation_TextChanged" />
         <TextBlock Name ="PayoffBlock" HorizontalAlignment="Left" Margin="340,227,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63"/>
         <TextBlock Name ="HedgeBlock" HorizontalAlignment="Left" Margin="340,262,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
