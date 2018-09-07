@@ -163,21 +163,7 @@ namespace DotNet.Models
         }
 
 
-        public List<DataFeed> CutDataFeed(int joursDEstimation, DateTime dateActuelle)
-        {
-            DateTime dateDebutEstimation = dateActuelle.AddDays(-joursDEstimation);
-            List<DataFeed> cutData = new List<DataFeed>();
-            foreach (var element in dataFeedProvider.GetDataFeed(option, dateDebutEstimation))
-            {
-                if (element.Date <= dateActuelle)
-                {
-                    cutData.Add(element);
-                }
-            }
-            return cutData;
-
-        }
-
+        
         public decimal[,] GetLogReturns(List<DataFeed> dataFeedList)
         {
             CovMatrix matriceCov = new CovMatrix(dataFeedList);
