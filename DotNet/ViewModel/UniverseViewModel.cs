@@ -14,6 +14,7 @@ namespace DotNet.ViewModel
        // private UniverseFacade facade;
         private GraphViewModel graphVM;
         private SimulationModel simulation;
+        private InitializerViewModel initializer;
 
         #endregion Private Fields
 
@@ -21,8 +22,9 @@ namespace DotNet.ViewModel
 
         public UniverseViewModel()
         {
+            initializer = new InitializerViewModel();
             simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), DateTime.Now, 2);
+            new SimulatedDataFeedProvider(), initializer.debutTest, 2);
             graphVM = new GraphViewModel();
             var underlyingUniverse = new Universe(simulation, graphVM.Graph);
             /* facade = new UniverseFacade(underlyingUniverse); */
@@ -31,7 +33,11 @@ namespace DotNet.ViewModel
         #endregion Public Constructors
 
         #region Public Properties
-
+        public InitializerViewModel Initializer
+        {
+            get { return initializer; }
+            set { initializer = value; }
+        }
         /* public UniverseFacade Facade
          {
              get { return facade; }
@@ -40,7 +46,10 @@ namespace DotNet.ViewModel
         public SimulationModel Simulation
         {
             get { return simulation; }
-            //set ? 
+            set {
+                simulation = value;
+                RaisePropertyChanged(nameof(Simulation));
+            }
         }
 
         public GraphViewModel GraphVM

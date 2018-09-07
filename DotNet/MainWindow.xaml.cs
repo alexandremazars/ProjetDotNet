@@ -30,5 +30,10 @@ namespace DotNet
         {
 
         }
+
+        private void NbJoursEstimation_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -27,12 +27,12 @@ namespace DotNet
         public string strike { get; set; }
         public DateTime maturity { get; set; }
         public double price { get; set; }
-        public DateTime debutTest { get; set; }
+
         public int nbDaysEstim { get; set; }
         public decimal payOffValue { get; set; } 
         public double hedgeValue { get; set; }
-        public ObservableCollection<Graph> AvailableClasses { get; private set; }
         public static Graph graphTest { get; set; }
+        public Window win;
 
         #endregion
 
@@ -44,28 +44,27 @@ namespace DotNet
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
+            Console.WriteLine(StartCommand);
             universeVM = new UniverseViewModel();
             IOption call = Simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
             AvailableOptions = new ObservableCollection<IOption>(myOptionsList);
             strike = Convert.ToString(Simulation.Strike);
             maturity = Simulation.Option.Maturity;
-            debutTest = Simulation.DateDebut;
+
+
             nbDaysEstim = Simulation.PlageEstimation;
             price = Simulation.GetRebalancement()[0].prixOption();
-            payOffValue = Simulation.GetPayoff().Last();
-            hedgeValue = Simulation.GetCouverture().Last();
-
-            /*Graph graph = new Graph();
-            graph.setSimulation(simulation);
-            List<Graph> myList = new List<Graph>() {graph};
-            AvailableClasses = new ObservableCollection<Graph>(myList);*/
+            payOffValue = Simulation.PayOffaMaturite;
+            hedgeValue = Simulation.HedgeMaturity;
 
             graphTest = GraphTest;
-            Window win = new GraphVisualization();
+            win = new GraphVisualization();
             win.Show();
         }
         #endregion
+
+        public UniverseViewModel UniverseVM { get { return universeVM; } }
 
         public SimulationModel Simulation
         {
@@ -81,6 +80,15 @@ namespace DotNet
         {
             get { return selectedClasses; }
             set { SetProperty(ref selectedClasses, value); }
+        }
+        public Window Win
+        {
+            get { return win; }
+            set
+            {
+                win = value;
+                RaisePropertyChanged(nameof(win));
+            }
         }
 
         public DelegateCommand StartCommand { get; private set; }
@@ -102,11 +110,19 @@ namespace DotNet
             {
                 TickerStarted = false;
             }*/
-            return TickerStarted;
+            
+            return !TickerStarted;
         }
         private void StartTicker()
         {
-            TickerStarted = true;
+            universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
+            new SimulatedDataFeedProvider(), UniverseVM.Initializer.DebutTest, 2);
+            win.Close();
+            graphTest = GraphTest;
+            win = new GraphVisualization();
+            win.Show();
+            TickerStarted = false;
+
         }
 
     }

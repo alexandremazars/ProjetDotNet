@@ -22,16 +22,16 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <DatePicker Name="DateDebutTest" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120" SelectedDate="{Binding debutTest}" />
+        <DatePicker Name="DateDebutTest" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120" SelectedDate="{Binding UniverseVM.Initializer.DebutTest, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox x:Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="{Binding strike}" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" />
         <DatePicker Name="DateMaturity" HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"  SelectedDate="{Binding maturity}"/>
         <ComboBox HorizontalAlignment="Left" Margin="199,91,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="NbJoursEstimation" HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" Text="{Binding nbDaysEstim}" Width="106" />
+        <TextBox Name="NbJoursEstimation" HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" Text="{Binding nbDaysEstim}" Width="106" TextChanged="NbJoursEstimation_TextChanged" />
         <TextBlock Name ="PayoffBlock" HorizontalAlignment="Left" Margin="340,227,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63"/>
         <TextBlock Name ="HedgeBlock" HorizontalAlignment="Left" Margin="340,262,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
         <TextBlock Name="PriceBlock" HorizontalAlignment="Left" Margin="340,296,0,0" TextWrapping="Wrap" Text="Price option :" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.491,1.988"/>
-        <TextBlock Name="PayoffValue" HorizontalAlignment="Left" Margin="403,227,0,0" TextWrapping="Wrap" Text="{Binding payOffValue}" VerticalAlignment="Top"/>
-        <TextBlock Name="HedgeValue" HorizontalAlignment="Left" Margin="403,262,0,0" TextWrapping="Wrap" Text="{Binding hedgeValue}" VerticalAlignment="Top"/>
-        <TextBlock Name="PriceValue" HorizontalAlignment="Left" Margin="433,299,0,0" TextWrapping="Wrap" Text="{Binding price}" VerticalAlignment="Top"/>
+        <TextBlock Name="PayoffValue" HorizontalAlignment="Left" Margin="403,227,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Simulation.PayOffaMaturite, UpdateSourceTrigger=Default}" VerticalAlignment="Top"/>
+        <TextBlock Name="HedgeValue" HorizontalAlignment="Left" Margin="403,262,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Simulation.HedgeMaturity}" VerticalAlignment="Top"/>
+        <TextBlock Name="PriceValue" HorizontalAlignment="Left" Margin="433,299,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Simulation.PriceDebut}" VerticalAlignment="Top"/>
     </Grid>
 </Window>

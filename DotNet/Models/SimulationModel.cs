@@ -63,6 +63,19 @@ namespace DotNet.Models
             set { plageEstimation = value; }
         }
 
+        public decimal PayOffaMaturite
+        {
+            get { return this.GetPayoff().Last(); }
+        }
+
+        public double HedgeMaturity
+        {
+            get { return this.GetCouverture().Last(); }
+        }
+         public double PriceDebut
+        {
+            get { return this.GetRebalancement()[0].prixOption(); }
+        }
         public RebalancementModel Jour0(DataFeed feedJour0, int periodeRebalancement)
         {
             RebalancementModel couverture = new RebalancementModel(option, dateDebut, (double) feedJour0.PriceList["1"], dataFeedProvider.NumberOfDaysPerYear, periodeRebalancement);
