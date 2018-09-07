@@ -24,8 +24,8 @@ namespace DotNet.ViewModel
         public UniverseViewModel()
         {
             initializer = new InitializerViewModel();
-            simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), initializer.debutTest, 2);
+            simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), initializer.Strike),
+            new SimulatedDataFeedProvider(), initializer.debutTest, initializer.PlageEstimation);
             graphVM = new GraphViewModel();
             underlyingUniverse = new Universe(simulation, graphVM.Graph);
             /* facade = new UniverseFacade(underlyingUniverse); */

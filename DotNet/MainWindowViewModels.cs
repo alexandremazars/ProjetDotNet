@@ -27,8 +27,6 @@ namespace DotNet
         public string strike { get; set; }
         public DateTime maturity { get; set; }
         public double price { get; set; }
-
-        public int nbDaysEstim { get; set; }
         public decimal payOffValue { get; set; } 
         public double hedgeValue { get; set; }
         public static Graph graphTest { get; set; }
@@ -44,23 +42,19 @@ namespace DotNet
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
-            Console.WriteLine(StartCommand);
             universeVM = new UniverseViewModel();
             IOption call = Simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
             AvailableOptions = new ObservableCollection<IOption>(myOptionsList);
             strike = Convert.ToString(Simulation.Strike);
             maturity = Simulation.Option.Maturity;
-
-
-            nbDaysEstim = Simulation.PlageEstimation;
             price = Simulation.GetRebalancement()[0].prixOption();
             payOffValue = Simulation.PayOffaMaturite;
             hedgeValue = Simulation.HedgeMaturity;
 
             graphTest = GraphTest;
-            win = new GraphVisualization();
-            win.Show();
+           win = new GraphVisualization();
+            /* win.Show();*/
         }
         #endregion
 
@@ -114,18 +108,19 @@ namespace DotNet
             return !TickerStarted;
         }
         private void StartTicker()
-        {
-            universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), UniverseVM.Initializer.DebutTest, 2);
-            win.Close();
-            universeVM.UnderlyingUniverse = new Universe(universeVM.Simulation, universeVM.GraphVM.Graph);
+        {  
+            universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), UniverseVM.Initializer.Strike),
+            new SimulatedDataFeedProvider(), UniverseVM.Initializer.DebutTest, UniverseVM.Initializer.PlageEstimation);
             
-            // = GraphTest;
+            universeVM.UnderlyingUniverse = new Universe(universeVM.Simulation, universeVM.GraphVM.Graph);
+            if (win != null)
+            {
+                win.Close();
+            }
             graphTest = universeVM.UnderlyingUniverse.Graph;
             win = new GraphVisualization();
             win.Show();
             TickerStarted = false;
-
         }
 
     }

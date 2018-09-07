@@ -10,15 +10,31 @@ namespace DotNet.ViewModel
     {
         #region public properties
         public DateTime debutTest { get; set; }
+        public int plageEstimation { get; set; }
+        public double strike { get; set; }
         public InitializerViewModel()
         {
-                debutTest = DateTime.Now;
+            debutTest = DateTime.Now;
+            plageEstimation = 15;
+            strike = 8;
         }
         #endregion
         public DateTime DebutTest
         {
             get { return debutTest; }
             set { debutTest = value; }
+        }
+
+        public int PlageEstimation
+        {
+            get { return plageEstimation; }
+            set { plageEstimation = value; }
+        }
+
+        public double Strike
+        {
+            get { return strike; }
+            set { strike = value; }
         }
     }
 }
