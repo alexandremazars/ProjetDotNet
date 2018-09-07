@@ -39,7 +39,6 @@ namespace DotNet.Models
             this.dateDebut = dateDebut;
             if (plageEstimation < 2) { throw new ArgumentOutOfRangeException("Estimation duration should be upper than 2 days"); }
             this.plageEstimation = plageEstimation;
-            ComparaisonOptionCouverture();
         }
 
         public IOption Option
@@ -78,7 +77,7 @@ namespace DotNet.Models
 
         public decimal PayOffaMaturite
         {
-            get { return this.GetPayoff().Last(); }
+            get { return this.GetPayOff().Last(); }
         }
 
         public double HedgeMaturity
@@ -100,7 +99,7 @@ namespace DotNet.Models
             return couverture;
         }
 
-        public List<decimal> GetPayoff()
+        public List<decimal> GetPayOff()
         {
             List<decimal> payoffs = new List<decimal>();
             int periodeRebalancement = 1;
@@ -110,7 +109,7 @@ namespace DotNet.Models
             {
                 var element = priceList[i];
                 decimal spotPrice = element.PriceList["1"];
-                payoffs.Add(spotPrice);
+                payoffs.Add(Math.Max(spotPrice-Convert.ToDecimal(Strike), 0));
             }
             return payoffs;
         }
