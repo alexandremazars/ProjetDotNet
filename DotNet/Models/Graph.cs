@@ -41,6 +41,10 @@ namespace DotNet.Models
         public void setSimulation(SimulationModel simulation)
         {
             this.GraphSimulation = simulation;
+            SeriesCollection[0].Values = new ChartValues<double> { };
+            SeriesCollection[1].Values = new ChartValues<double> { };
+            Labels = new List<string> { };
+
             foreach (var item in GraphSimulation.GetRebalancement())
             {
                 SeriesCollection[0].Values.Add(item.prixOption());

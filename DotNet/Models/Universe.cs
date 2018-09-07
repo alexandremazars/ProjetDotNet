@@ -33,13 +33,22 @@ namespace DotNet.Models
         public SimulationModel Simulation
         {
             get { return simulation; }
-            // set ? 
+            set
+            {
+                simulation = value;
+                //RaisePropertyChanged(nameof(simulation));
+            }
         }
 
         public Graph Graph
         {
             get { return graph; }
-            // set ?
+            set
+            {
+                graph = value;
+                graph.setSimulation(simulation);
+                //RaisePropertyChanged(nameof(graph);
+            }
         }
 
         #endregion Public Properties

@@ -118,7 +118,10 @@ namespace DotNet
             universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
             new SimulatedDataFeedProvider(), UniverseVM.Initializer.DebutTest, 2);
             win.Close();
-            graphTest = GraphTest;
+            universeVM.UnderlyingUniverse = new Universe(universeVM.Simulation, universeVM.GraphVM.Graph);
+            
+            // = GraphTest;
+            graphTest = universeVM.UnderlyingUniverse.Graph;
             win = new GraphVisualization();
             win.Show();
             TickerStarted = false;
