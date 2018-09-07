@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DotNet.Models
 {
-    class PortefeuilleModel
+    class Volatilite
     {
-
+        int a;
     }
 }

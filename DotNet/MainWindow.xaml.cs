@@ -30,5 +30,15 @@ namespace DotNet
         {
 
         }
+
+        private void NbJoursEstimation_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

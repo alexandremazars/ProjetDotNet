@@ -3,26 +3,47 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DotNet"
         x:Class="DotNet.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Command="{Binding StartCommand}" Content="Start" HorizontalAlignment="Left" Margin="707,204,0,0" VerticalAlignment="Top" Width="75"/>
-        <ComboBox HorizontalAlignment="Left" Margin="33,42,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableOptions}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/GraphDictionnary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="0,0,-8,-20">
+        <Button Command="{Binding StartCommand}" Content="StartSimulation" HorizontalAlignment="Left" Margin="616,162,0,0" VerticalAlignment="Top" Width="131" RenderTransformOrigin="-1.067,-1.682"/>
+        <ComboBox Name="OptionsName" HorizontalAlignment="Left" Margin="33,42,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding AvailableOptions}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,91,0,0" Width="120" />
-        <TextBox x:Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="Strike" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" />
-        <DatePicker HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"/>
-        <ComboBox HorizontalAlignment="Left" Margin="199,91,0,0" VerticalAlignment="Top" Width="120"/>
-        <DatePicker HorizontalAlignment="Left" Margin="340,91,0,0" VerticalAlignment="Top" Width="106"/>
-        <TextBlock HorizontalAlignment="Left" Margin="340,227,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63"/>
-        <TextBlock HorizontalAlignment="Left" Margin="340,262,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
-        <TextBlock HorizontalAlignment="Left" Margin="340,296,0,0" TextWrapping="Wrap" Text="Price option :" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.491,1.988"/>
+        <DatePicker Name="DateDebutTest" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,109,0,0" Width="120" SelectedDate="{Binding UniverseVM.Initializer.DebutTest, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.475,2.167" />
+        <TextBox x:Name ="StrikeBox" HorizontalAlignment="Left" Height="22"  Margin="199,42,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Initializer.Strike }" VerticalAlignment="Top" Width="110" TextChanged="TextBox_TextChanged" />
+        <DatePicker Name="DateMaturity" HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="106"  SelectedDate="{Binding UniverseVM.Initializer.Maturity}"/>
+        <ComboBox Name="DataType" HorizontalAlignment="Left" Margin="199,111,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" SelectedItem="{Binding UniverseVM.Initializer.TypeData}" ItemsSource="{Binding AvailableData}">
+        <ComboBox.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Name}"/>
+            </DataTemplate>
+        </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBox Name="NbJoursEstimation" HorizontalAlignment="Left" Margin="340,109,0,0" VerticalAlignment="Top" Text="{Binding UniverseVM.Initializer.PlageEstimation}" Width="106" TextChanged="NbJoursEstimation_TextChanged" />
+        <TextBlock Name ="PayoffBlock" HorizontalAlignment="Left" Margin="340,227,0,0" TextWrapping="Wrap" Text="Payoff :" VerticalAlignment="Top" Width="63"/>
+        <TextBlock Name ="HedgeBlock" HorizontalAlignment="Left" Margin="340,262,0,0" TextWrapping="Wrap" Text="Hedge :" VerticalAlignment="Top" Width="93"/>
+        <TextBlock Name="PriceBlock" HorizontalAlignment="Left" Margin="340,296,0,0" TextWrapping="Wrap" Text="Price option :" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.491,1.988"/>
+        <TextBlock Name="PayoffValue" HorizontalAlignment="Left" Margin="403,227,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Simulation.PayOffaMaturite, UpdateSourceTrigger=Default}" VerticalAlignment="Top"/>
+        <TextBlock Name="HedgeValue" HorizontalAlignment="Left" Margin="403,262,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Simulation.HedgeMaturity}" VerticalAlignment="Top"/>
+        <TextBlock Name="PriceValue" HorizontalAlignment="Left" Margin="433,299,0,0" TextWrapping="Wrap" Text="{Binding UniverseVM.Simulation.PriceDebut}" VerticalAlignment="Top"/>
+        <Label Content="Option type" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Option strike" HorizontalAlignment="Left" Margin="199,11,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.526,0.5"/>
+        <Label Content="Maturity" HorizontalAlignment="Left" Margin="340,11,0,0" VerticalAlignment="Top"/>
+        <Label Content="Test beginning" HorizontalAlignment="Left" Margin="33,83,0,0" VerticalAlignment="Top"/>
+        <Label Content="Data type" HorizontalAlignment="Left" Margin="199,83,0,0" VerticalAlignment="Top"/>
+        <Label Content="Nb of days for estimation" HorizontalAlignment="Left" Margin="340,83,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

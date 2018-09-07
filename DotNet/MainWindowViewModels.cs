@@ -9,39 +9,74 @@ using Prism.Commands;
 using Prism.Mvvm;
 using DotNet.Models;
 using PricingLibrary.Utilities.MarketDataFeed;
+using System.Windows;
+using DotNet.Visualization;
+using DotNet.ViewModel;
 
 namespace DotNet
 {
     internal class MainWindowViewModels : BindableBase
     {
+        #region Private fields
+        private Graph selectedClasses;
+        private UniverseViewModel universeVM;
+        private bool tickerStarted;
+        #endregion
+
         #region public fields
         public ObservableCollection<IOption> AvailableOptions { get; private set; }
-        public string strike { get; set; }
-        public DateTime maturity { get; set; }
-        public decimal price { get; set; }
-        //public ObservableCollection<>
+        public ObservableCollection<IDataFeedProvider> AvailableData { get; private set; }
+        public static Graph graphTest { get; set; }
+        public Window win;
 
         #endregion
 
-        #region Private fields
-        private bool tickerStarted;
-        #endregion 
 
         #region Public Constructors
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
-            IOption call = new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 1, 6), 10);
+            universeVM = new UniverseViewModel();
+            /*IOption call = Simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
-            AvailableOptions = new ObservableCollection<IOption>(myOptionsList);
-            Console.Write(myOptionsList[0].Name);
+            AvailableOptions = new ObservableCollection<IOption>(myOptionsList);*/
+
+            IDataFeedProvider type1 = new SimulatedDataFeedProvider();
+            IDataFeedProvider type2 = new HistoricalDataFeedProvider();
+            List<IDataFeedProvider> mydataList = new List<IDataFeedProvider>() { type1,type2 };
+            AvailableData = new ObservableCollection<IDataFeedProvider>(mydataList);
+            graphTest = GraphTest;
+           win = new GraphVisualization();
+            /* win.Show();*/
         }
         #endregion
 
+        public UniverseViewModel UniverseVM { get { return universeVM; } }
 
-        SimulationModel simulation = new SimulationModel(new VanillaCall("Vanilla", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), DateTime.Now, 1);
+        public SimulationModel Simulation
+        {
+            get { return universeVM.Simulation; }
+        }
 
+        public Graph GraphTest
+        {
+            get { return universeVM.GraphVM.Graph; }
+        }
+
+        public Graph SelectedClasses
+        {
+            get { return selectedClasses; }
+            set { SetProperty(ref selectedClasses, value); }
+        }
+        public Window Win
+        {
+            get { return win; }
+            set
+            {
+                win = value;
+                RaisePropertyChanged(nameof(win));
+            }
+        }
 
         public DelegateCommand StartCommand { get; private set; }
 
@@ -62,13 +97,26 @@ namespace DotNet
             {
                 TickerStarted = false;
             }*/
-            return TickerStarted;
+            
+            return !TickerStarted;
         }
         private void StartTicker()
         {
-            TickerStarted = true;
+            //universeVM = new UniverseViewModel();
+
+            universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), UniverseVM.Initializer.Maturity, UniverseVM.Initializer.Strike),
+            UniverseVM.Initializer.TypeData, UniverseVM.Initializer.DebutTest, UniverseVM.Initializer.PlageEstimation);
+            
+            universeVM.UnderlyingUniverse = new Universe(universeVM.Simulation, universeVM.GraphVM.Graph);
+            if (win != null)
+            {
+                win.Close();
+            }
+            graphTest = universeVM.UnderlyingUniverse.Graph;
+            win = new GraphVisualization();
+            win.Show();
+            TickerStarted = false;
         }
-        //Main test = new Main();
 
     }
 }
