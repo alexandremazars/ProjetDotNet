@@ -153,10 +153,29 @@ namespace DotNet.Models
             double optionInitiale = rebalancements[0].prixOption();
 
             foreach (RebalancementModel rebalancement in rebalancements)
+            {
+
+            }
                 //comparaisons.Add(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
-                Console.WriteLine(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
+                //Console.WriteLine(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
 
             return comparaisons;
+        }
+
+
+        public List<DataFeed> CutDataFeed(int joursDEstimation, DateTime dateActuelle)
+        {
+            DateTime dateDebutEstimation = dateActuelle.AddDays(-joursDEstimation);
+            List<DataFeed> cutData = new List<DataFeed>();
+            foreach (var element in dataFeedProvider.GetDataFeed(option, dateDebutEstimation))
+            {
+                if (element.Date <= dateActuelle)
+                {
+                    cutData.Add(element);
+                }
+            }
+            return cutData;
+
         }
 
         public decimal[,] GetLogReturns(List<DataFeed> dataFeedList)
