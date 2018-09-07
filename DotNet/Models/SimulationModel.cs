@@ -4,6 +4,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,16 @@ namespace DotNet.Models
         private DateTime dateDebut;
 
         private int plageEstimation;
+
+        [DllImport("wre-modeling-c-4.1.dll", EntryPoint = "WREmodelingCov", CallingConvention = CallingConvention.Cdecl)]
+
+        public static extern int WREmodelingCov(
+            ref int returnsSize,
+            ref int nbSec,
+            double[,] secReturns,
+            double[,] covMatrix,
+            ref int info
+        );
 
         public SimulationModel(IOption option, IDataFeedProvider dataFeedProvider, DateTime dateDebut, int plageEstimation)
         {
@@ -146,5 +157,34 @@ namespace DotNet.Models
 
             return comparaisons;
         }
+
+        public decimal[,] GetLogReturns(List<DataFeed> dataFeedList)
+        {
+            CovMatrix matriceCov = new CovMatrix(dataFeedList);
+            decimal[,] LogReturnsMatrix;
+            LogReturnsMatrix = matriceCov.LogReturns();
+            return LogReturnsMatrix;
+
+        }
+
+        public static double[,] computeCovarianceMatrix(double[,] returns)
+        {
+            int dataSize = returns.GetLength(0);
+            int nbAssets = returns.GetLength(1);
+            double[,] covMatrix = new double[nbAssets, nbAssets];
+            int info = 0;
+            int res;
+            res = WREmodelingCov(ref dataSize, ref nbAssets, returns, covMatrix, ref info);
+            if (res != 0)
+            {
+                if (res < 0)
+                    throw new Exception("ERROR: WREmodelingCov encountred a problem. See info parameter for more details");
+                else
+                    throw new Exception("WARNING: WREmodelingCov encountred a problem. See info parameter for more details");
+            }
+            return covMatrix;
+        }
+
+      
     }
 }

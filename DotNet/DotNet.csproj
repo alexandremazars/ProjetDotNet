@@ -108,10 +108,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+
+    <Compile Include="Models\covMatrix.cs" />
+
     <Compile Include="Models\Universe.cs" />
     <Compile Include="ViewModel\InitializerViewModel.cs" />
     <Compile Include="ViewModel\UniverseViewModel.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
+
     <Compile Include="Visualization\GraphVisualization.xaml.cs">
       <DependentUpon>GraphVisualization.xaml</DependentUpon>
     </Compile>
