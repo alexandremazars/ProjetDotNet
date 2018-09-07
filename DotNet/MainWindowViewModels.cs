@@ -11,6 +11,7 @@ using DotNet.Models;
 using PricingLibrary.Utilities.MarketDataFeed;
 using System.Windows;
 using DotNet.Visualization;
+using DotNet.ViewModel;
 
 namespace DotNet
 {
@@ -18,6 +19,7 @@ namespace DotNet
     {
         #region Private fields
         private Graph selectedClasses;
+        private UniverseViewModel universeVM;
         #endregion
 
         #region public fields
@@ -26,14 +28,12 @@ namespace DotNet
         public DateTime maturity { get; set; }
         public double price { get; set; }
         public DateTime debutTest { get; set; }
-        //public ObservableCollection<>
+        public int nbDaysEstim { get; set; }
         public decimal payOffValue { get; set; } 
         public double hedgeValue { get; set; }
         public ObservableCollection<Graph> AvailableClasses { get; private set; }
         public static Graph graphTest { get; set; }
 
-
-        public SimulationModel simulation;
         #endregion
 
         #region Private fields
@@ -44,24 +44,24 @@ namespace DotNet
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
-            simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), DateTime.Now, 1);
-            IOption call = simulation.Option;
+            universeVM = new UniverseViewModel();
+            IOption call = Simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
             AvailableOptions = new ObservableCollection<IOption>(myOptionsList);
-            strike = Convert.ToString(simulation.Strike);
-            maturity = simulation.Option.Maturity;
-            debutTest = simulation.DateDebut;
-            price = simulation.GetRebalancement()[0].prixOption();
-            payOffValue = simulation.GetPayoff().Last();
-            hedgeValue = simulation.GetCouverture().Last();
+            strike = Convert.ToString(Simulation.Strike);
+            maturity = Simulation.Option.Maturity;
+            debutTest = Simulation.DateDebut;
+            nbDaysEstim = Simulation.PlageEstimation;
+            price = Simulation.GetRebalancement()[0].prixOption();
+            payOffValue = Simulation.GetPayoff().Last();
+            hedgeValue = Simulation.GetCouverture().Last();
 
-            Graph graph = new Graph();
+            /*Graph graph = new Graph();
             graph.setSimulation(simulation);
             List<Graph> myList = new List<Graph>() {graph};
-            AvailableClasses = new ObservableCollection<Graph>(myList);
-            graphTest = new Graph();
-            graphTest.setSimulation(simulation);
+            AvailableClasses = new ObservableCollection<Graph>(myList);*/
+
+            graphTest = GraphTest;
             Window win = new GraphVisualization();
             win.Show();
         }
@@ -69,8 +69,14 @@ namespace DotNet
 
         public SimulationModel Simulation
         {
-            get { return simulation; }
+            get { return universeVM.Simulation; }
         }
+
+        public Graph GraphTest
+        {
+            get { return universeVM.GraphVM.Graph; }
+        }
+
         public Graph SelectedClasses
         {
             get { return selectedClasses; }
@@ -102,7 +108,6 @@ namespace DotNet
         {
             TickerStarted = true;
         }
-        //Main test = new Main();
 
     }
 }

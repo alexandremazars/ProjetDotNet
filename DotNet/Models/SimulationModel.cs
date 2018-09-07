@@ -20,9 +20,11 @@ namespace DotNet.Models
 
         public SimulationModel(IOption option, IDataFeedProvider dataFeedProvider, DateTime dateDebut, int plageEstimation)
         {
-            this.option = option;
-            this.dataFeedProvider = dataFeedProvider;
+            this.option = option ?? throw new ArgumentNullException("Option should not be null");
+            this.dataFeedProvider = dataFeedProvider ?? throw new ArgumentNullException("dataFeed should not be null");
+            if (dateDebut == null) { throw new ArgumentNullException("Beginning date should not be null"); }
             this.dateDebut = dateDebut;
+            if (plageEstimation < 2) { throw new ArgumentOutOfRangeException("Estimation duration should be upper than 2 days"); }
             this.plageEstimation = plageEstimation;
             ComparaisonOptionCouverture();
         }
