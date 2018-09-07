@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization;
 using System.Windows.Media;
-using DotNet.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
 
-namespace DotNet
+namespace DotNet.Models
 {
     internal class Graph 
     {

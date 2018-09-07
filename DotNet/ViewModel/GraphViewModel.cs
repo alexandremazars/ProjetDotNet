@@ -11,11 +11,14 @@ namespace DotNet.ViewModel
     {
         private Graph graph;
         public string Name { get { return "HedgeVsPorfolio"; } }
-        public GraphViewModel(SimulationModel simulation)
+        public GraphViewModel()
         {
             graph = new Graph();
-            graph.setSimulation(simulation);
+        }
 
+        public Graph Graph
+        {
+            get { return graph; }
         }
     }
 }
