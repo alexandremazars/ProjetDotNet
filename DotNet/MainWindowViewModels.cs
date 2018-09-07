@@ -20,47 +20,34 @@ namespace DotNet
         #region Private fields
         private Graph selectedClasses;
         private UniverseViewModel universeVM;
+        private bool tickerStarted;
         #endregion
 
         #region public fields
         public ObservableCollection<IOption> AvailableOptions { get; private set; }
-        public string strike { get; set; }
-        public DateTime maturity { get; set; }
-        public double price { get; set; }
-
-        public int nbDaysEstim { get; set; }
-        public decimal payOffValue { get; set; } 
-        public double hedgeValue { get; set; }
+        public ObservableCollection<IDataFeedProvider> AvailableData { get; private set; }
         public static Graph graphTest { get; set; }
         public Window win;
 
         #endregion
 
-        #region Private fields
-        private bool tickerStarted;
-        #endregion 
 
         #region Public Constructors
         public MainWindowViewModels()
         {
             StartCommand = new DelegateCommand(StartTicker, CanStartTicker);
-            Console.WriteLine(StartCommand);
             universeVM = new UniverseViewModel();
-            IOption call = Simulation.Option;
+            /*IOption call = Simulation.Option;
             List<IOption> myOptionsList = new List<IOption>() { call };
-            AvailableOptions = new ObservableCollection<IOption>(myOptionsList);
-            strike = Convert.ToString(Simulation.Strike);
-            maturity = Simulation.Option.Maturity;
+            AvailableOptions = new ObservableCollection<IOption>(myOptionsList);*/
 
-
-            nbDaysEstim = Simulation.PlageEstimation;
-            price = Simulation.GetRebalancement()[0].prixOption();
-            payOffValue = Simulation.PayOffaMaturite;
-            hedgeValue = Simulation.HedgeMaturity;
-
+            IDataFeedProvider type1 = new SimulatedDataFeedProvider();
+            IDataFeedProvider type2 = new HistoricalDataFeedProvider();
+            List<IDataFeedProvider> mydataList = new List<IDataFeedProvider>() { type1,type2 };
+            AvailableData = new ObservableCollection<IDataFeedProvider>(mydataList);
             graphTest = GraphTest;
-            win = new GraphVisualization();
-            win.Show();
+           win = new GraphVisualization();
+            /* win.Show();*/
         }
         #endregion
 
@@ -115,14 +102,20 @@ namespace DotNet
         }
         private void StartTicker()
         {
-            universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), new DateTime(2019, 6, 6), 8),
-            new SimulatedDataFeedProvider(), UniverseVM.Initializer.DebutTest, 2);
-            win.Close();
-            graphTest = GraphTest;
+            //universeVM = new UniverseViewModel();
+
+            universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), UniverseVM.Initializer.Maturity, UniverseVM.Initializer.Strike),
+            UniverseVM.Initializer.TypeData, UniverseVM.Initializer.DebutTest, UniverseVM.Initializer.PlageEstimation);
+            
+            universeVM.UnderlyingUniverse = new Universe(universeVM.Simulation, universeVM.GraphVM.Graph);
+            if (win != null)
+            {
+                win.Close();
+            }
+            graphTest = universeVM.UnderlyingUniverse.Graph;
             win = new GraphVisualization();
             win.Show();
             TickerStarted = false;
-
         }
 
     }

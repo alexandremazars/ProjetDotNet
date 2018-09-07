@@ -12,12 +12,14 @@ namespace DotNet.Models
 {
     class SimulationModel
     {
+        #region private field
         private IOption option;
         private IDataFeedProvider dataFeedProvider;
 
         private DateTime dateDebut;
 
         private int plageEstimation;
+        #endregion
 
         [DllImport("wre-modeling-c-4.1.dll", EntryPoint = "WREmodelingCov", CallingConvention = CallingConvention.Cdecl)]
 
