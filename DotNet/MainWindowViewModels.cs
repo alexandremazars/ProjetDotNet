@@ -31,9 +31,6 @@ namespace DotNet
 
         #endregion
 
-        #region Private fields
-        
-        #endregion 
 
         #region Public Constructors
         public MainWindowViewModels()
