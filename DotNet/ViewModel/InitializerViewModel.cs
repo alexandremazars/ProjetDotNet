@@ -18,7 +18,7 @@ namespace DotNet.ViewModel
         public InitializerViewModel()
         {
             debutTest = DateTime.Now;
-            maturity = new DateTime(2019, 6, 6);
+            maturity = new DateTime(2019, 6, 7);
             plageEstimation = 15;
             typeData = new SimulatedDataFeedProvider();
             strike = 8;

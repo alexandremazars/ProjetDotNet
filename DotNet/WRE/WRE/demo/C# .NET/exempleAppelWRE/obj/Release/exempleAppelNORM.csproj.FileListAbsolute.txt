@@ -1,0 +1,5 @@
+C:\Documents and Settings\sophie2\Local Settings\Application Data\Temporary Projects\exempleAppelNORM\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\sophie2\Local Settings\Application Data\Temporary Projects\exempleAppelNORM\bin\Release\exempleAppelNORM.exe
+C:\Documents and Settings\sophie2\Local Settings\Application Data\Temporary Projects\exempleAppelNORM\bin\Release\exempleAppelNORM.pdb
+C:\Documents and Settings\sophie2\Local Settings\Application Data\Temporary Projects\exempleAppelNORM\obj\Release\exempleAppelNORM.exe
+C:\Documents and Settings\sophie2\Local Settings\Application Data\Temporary Projects\exempleAppelNORM\obj\Release\exempleAppelNORM.pdb
