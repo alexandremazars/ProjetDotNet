@@ -21,24 +21,15 @@ namespace DotNet.Models
         private int plageEstimation;
         #endregion
 
-        [DllImport("wre-modeling-c-4.1.dll", EntryPoint = "WREmodelingCov", CallingConvention = CallingConvention.Cdecl)]
-
-        public static extern int WREmodelingCov(
-            ref int returnsSize,
-            ref int nbSec,
-            double[,] secReturns,
-            double[,] covMatrix,
-            ref int info
-        );
-
         public SimulationModel(IOption option, IDataFeedProvider dataFeedProvider, DateTime dateDebut, int plageEstimation)
         {
             this.option = option ?? throw new ArgumentNullException("Option should not be null");
             this.dataFeedProvider = dataFeedProvider ?? throw new ArgumentNullException("dataFeed should not be null");
             if (dateDebut == null) { throw new ArgumentNullException("Beginning date should not be null"); }
-            this.dateDebut = dateDebut;
+            this.dateDebut = new DateTime(2017, 9, 6);
             if (plageEstimation < 2) { throw new ArgumentOutOfRangeException("Estimation duration should be upper than 2 days"); }
             this.plageEstimation = plageEstimation;
+            Console.WriteLine("Volatilité: " + Estimateur.Volatile(dataFeedProvider.GetDataFeed(option, this.dateDebut), plageEstimation, new DateTime(2018, 9, 6), new double[] { 1}, dataFeedProvider));
         }
 
         public IOption Option
@@ -156,39 +147,10 @@ namespace DotNet.Models
             {
 
             }
-                //comparaisons.Add(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
-                //Console.WriteLine(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
+            //comparaisons.Add(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
+            //Console.WriteLine(Math.Abs(rebalancement.prixOption() - rebalancement.ValeurPortefeuille) / optionInitiale);
 
             return comparaisons;
-        }
-
-
-        
-        public decimal[,] GetLogReturns(List<DataFeed> dataFeedList)
-        {
-            CovMatrix matriceCov = new CovMatrix(dataFeedList);
-            decimal[,] LogReturnsMatrix;
-            LogReturnsMatrix = matriceCov.LogReturns();
-            return LogReturnsMatrix;
-
-        }
-
-        public static double[,] computeCovarianceMatrix(double[,] returns)
-        {
-            int dataSize = returns.GetLength(0);
-            int nbAssets = returns.GetLength(1);
-            double[,] covMatrix = new double[nbAssets, nbAssets];
-            int info = 0;
-            int res;
-            res = WREmodelingCov(ref dataSize, ref nbAssets, returns, covMatrix, ref info);
-            if (res != 0)
-            {
-                if (res < 0)
-                    throw new Exception("ERROR: WREmodelingCov encountred a problem. See info parameter for more details");
-                else
-                    throw new Exception("WARNING: WREmodelingCov encountred a problem. See info parameter for more details");
-            }
-            return covMatrix;
         }
 
       
