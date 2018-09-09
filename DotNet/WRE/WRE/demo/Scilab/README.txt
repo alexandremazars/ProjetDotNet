@@ -1,0 +1,1 @@
+In order to be able to run this Scilab example, you have to load the file "wre.sci".

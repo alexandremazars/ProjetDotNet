@@ -1,0 +1,5 @@
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\bin\x86\Debug\exempleAppelWRE.exe.config
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\bin\x86\Debug\exempleAppelWRE.exe
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\bin\x86\Debug\exempleAppelWRE.pdb
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\obj\x86\Debug\exempleAppelWRE.exe
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\obj\x86\Debug\exempleAppelWRE.pdb
