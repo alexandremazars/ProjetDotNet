@@ -98,10 +98,6 @@ namespace DotNet.Models
             return logReturnsMatrix;
         }
 
-
-        static double volatilite;
-        static double correlation;
-
         public static List<DataFeed> CutDataFeed(List<DataFeed> dataList, int joursDEstimation, DateTime dateActuelle)
         {
             DateTime dateDebutEstimation = dateActuelle.AddDays(-joursDEstimation);
@@ -123,7 +119,6 @@ namespace DotNet.Models
             List<DataFeed> cutData = CutDataFeed(dataList, joursDEstimation, dateActuelle);
             int n = cutData.Count();
             int m = cutData.First().PriceList.Count();
-            Console.WriteLine(n);
             double[,] assetsValues = new double[n, m];
             for (int i = 0; i < cutData.Count(); i++)
             {
@@ -142,7 +137,6 @@ namespace DotNet.Models
             List<DataFeed> cutData = CutDataFeed(dataList, joursDEstimation, dateActuelle);
             int n = cutData.Count();
             int m = cutData.First().PriceList.Count();
-            Console.WriteLine(n);
             double[,] assetsValues = new double[n, m];
             for (int i = 0; i < n; i++)
             {
@@ -179,7 +173,7 @@ namespace DotNet.Models
             return matrix;
         }
 
-        public static double Volatile(List<DataFeed> dataList, int joursDEstimation, DateTime dateActuelle, double[] weight, IDataFeedProvider dataFeedProvider)
+        public static double Volatilite(List<DataFeed> dataList, int joursDEstimation, DateTime dateActuelle, double[] weight, IDataFeedProvider dataFeedProvider)
         {
             double[,] covMatrix = getCovMatrix(dataList, joursDEstimation, dateActuelle);
             covMatrix = matrixWithWeight(covMatrix, weight);
@@ -188,6 +182,16 @@ namespace DotNet.Models
                 for (int j = 0; j < covMatrix.GetLength(1); j++)
                     variancePortefeuille += covMatrix[i, j];
             return Math.Sqrt(variancePortefeuille) * Math.Sqrt(dataFeedProvider.NumberOfDaysPerYear);
+        }
+
+        public static double Correlation(List<DataFeed> dataList, int joursDEstimation, DateTime dateActuelle)
+        {
+            double[,] corrMatrix = getCorrMatrix(dataList, joursDEstimation, dateActuelle);
+            double sommeCorrelation = 0;
+            for (int i = 0; i < corrMatrix.GetLength(0); i++)
+                for (int j = 0; j < corrMatrix.GetLength(1); j++)
+                    if (i != j) sommeCorrelation += corrMatrix[i, j];
+            return (corrMatrix.GetLength(0) > 1) ? sommeCorrelation / (corrMatrix.GetLength(0) * (corrMatrix.GetLength(0) - 1)) : 1;
         }
     }
 }

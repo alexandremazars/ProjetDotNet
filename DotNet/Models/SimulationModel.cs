@@ -26,10 +26,16 @@ namespace DotNet.Models
             this.option = option ?? throw new ArgumentNullException("Option should not be null");
             this.dataFeedProvider = dataFeedProvider ?? throw new ArgumentNullException("dataFeed should not be null");
             if (dateDebut == null) { throw new ArgumentNullException("Beginning date should not be null"); }
-            this.dateDebut = new DateTime(2017, 9, 6);
+            this.dateDebut = new DateTime(2012, 9,10);
             if (plageEstimation < 2) { throw new ArgumentOutOfRangeException("Estimation duration should be upper than 2 days"); }
             this.plageEstimation = plageEstimation;
-            Console.WriteLine("Volatilité: " + Estimateur.Volatile(dataFeedProvider.GetDataFeed(option, this.dateDebut), plageEstimation, new DateTime(2018, 9, 6), new double[] { 1}, dataFeedProvider));
+            Estimateur.dispMatrix(Estimateur.getCovMatrix(dataFeedProvider.GetDataFeed(option, this.dateDebut), plageEstimation, this.dateDebut.AddDays(14)));
+            if (option.GetType().ToString().EndsWith("VanillaCall"))
+                Console.WriteLine("Volatilité: " + Estimateur.Volatilite(dataFeedProvider.GetDataFeed(option, this.dateDebut), plageEstimation, this.dateDebut.AddDays(14), new double[] { 1 }, dataFeedProvider));
+            else if (option.GetType().ToString().EndsWith("BasketOption"))
+                Console.WriteLine("Volatilité: " + Estimateur.Volatilite(dataFeedProvider.GetDataFeed(option, this.dateDebut), plageEstimation, this.dateDebut.AddDays(14), ((BasketOption) option).Weights, dataFeedProvider));
+            Estimateur.dispMatrix(Estimateur.getCorrMatrix(dataFeedProvider.GetDataFeed(option, this.dateDebut), plageEstimation, this.dateDebut.AddDays(14)));
+            Console.WriteLine("Correlation moyenne: " + Estimateur.Correlation(dataFeedProvider.GetDataFeed(option, this.dateDebut), plageEstimation, this.dateDebut.AddDays(14)));
         }
 
         public IOption Option

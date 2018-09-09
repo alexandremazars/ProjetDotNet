@@ -104,8 +104,11 @@ namespace DotNet
         {
             //universeVM = new UniverseViewModel();
 
-            universeVM.Simulation = new SimulationModel(new VanillaCall("Vanilla Call", new Share("VanillaShare", "1"), UniverseVM.Initializer.Maturity, UniverseVM.Initializer.Strike),
-            UniverseVM.Initializer.TypeData, UniverseVM.Initializer.DebutTest, UniverseVM.Initializer.PlageEstimation);
+            BasketOption basketOption = new BasketOption("Basket", new Share[] { new Share("CREDIT AGRICOLE SA", "ACA FP    "), new Share("AIR LIQUIDE SA", "AI FP     "), new Share("AIRBUS GROUP SE", "AIR FP    ") }, new double[] { 0.2, 0.2, 0.5, 0.1 }, UniverseVM.Initializer.Maturity, UniverseVM.Initializer.Strike);
+            VanillaCall vanillaCall = new VanillaCall("Vanilla Call", new Share("AIRBUS GROUP SE", "AIR FP    "), UniverseVM.Initializer.Maturity, UniverseVM.Initializer.Strike);
+
+            universeVM.Simulation = new SimulationModel(basketOption, new HistoricalDataFeedProvider(), UniverseVM.Initializer.DebutTest, 
+                UniverseVM.Initializer.PlageEstimation);
             
             universeVM.UnderlyingUniverse = new Universe(universeVM.Simulation, universeVM.GraphVM.Graph);
             if (win != null)
